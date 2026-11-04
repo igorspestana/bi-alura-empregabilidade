@@ -1,46 +1,35 @@
-# Análise de empregabilidade
+# Análise dos resultados de empregabilidade
 
-Este diretório organiza consultas, resultados extraídos diariamente e relatórios de análise das features de empregabilidade.
+## Passo a passo diário
 
-```text
-bi-alura-empregabilidade/analise-resultados/
-├── consultas/      # Uma consulta SQL por feature
-├── scripts/        # Cruzamento com usuários STUDENT
-├── resultados/
-│   ├── finais/          # Cinco resultados prontos para análise
-│   └── intermediarios/  # Roleplays sem filtro e cruzamento de usuários
-└── relatorios/     # Análises por data
+### 1. Preparar os arquivos
+
+No terminal, entre neste diretório e execute:
+
+```bash
+cd /home/igor/repos/alura/bi-alura-empregabilidade/analise-resultados
+python3 scripts/preparar_arquivos.py
 ```
 
-## Rotina diária
+O script cria os arquivos ausentes e preserva os existentes. Se quiser guardar uma rodada anterior, arquive-a antes de substituir seu conteúdo.
 
-1. Execute cada consulta no banco indicado abaixo. Salve as extrações de Code Interview e System Design em `resultados/finais/`. Salve as três extrações de Roleplay sem filtro em `resultados/intermediarios/`. Use CSV ou TSV com cabeçalhos e inclua a data no nome para preservar o histórico, por exemplo `2026-11-04-roleplay-entrevista-tecnica.tsv`. Identifique o tenant nas extrações MySQL. Preserve os arquivos de dias anteriores: cada extração é um retrato completo e pode repetir tentativas de dias anteriores.
-2. Para Roleplay, faça o cruzamento com usuários STUDENT seguindo as instruções abaixo. As consultas MySQL já filtram a role diretamente.
-3. Solicite a análise informando a data e eventuais extrações ausentes ou com falha. Salve o relatório em `relatorios/` com a data no nome.
+### 2. Executar as consultas das features
 
-Use exportação pelo cliente de banco que preserve aspas e quebras de linha dentro dos campos. Para registrar um resultado vazio, mantenha um arquivo com os cabeçalhos.
+No BI, execute cada arquivo de `consultas/` no banco indicado. Copie o resultado **com o cabeçalho** e cole no arquivo correspondente, substituindo o conteúdo anterior:
 
-## Consultas
+| Banco | Consulta | Onde colar o resultado |
+| --- | --- | --- |
+| Alura | `code-interview.sql` | `resultados/finais/code-interview.tsv` |
+| Alura | `system-design.sql` | `resultados/finais/system-design.tsv` |
+| Gnarus AI | `roleplay-entrevista-comportamental.sql` | `resultados/intermediarios/roleplay-entrevista-comportamental.tsv` |
+| Gnarus AI | `roleplay-entrevista-tecnica.sql` | `resultados/intermediarios/roleplay-entrevista-tecnica.tsv` |
+| Gnarus AI | `roleplay-defesa-de-case.sql` | `resultados/intermediarios/roleplay-defesa-de-case.tsv` |
 
-| Feature | Consulta | Banco | Resultado |
-| --- | --- | --- | --- |
-| Code Interview (Code Challenge) | `consultas/code-interview.sql` | MySQL — Alura | Submissões finais com status, datas e `executionResponse`, que contém os resultados dos testes. Não inclui execuções de testes públicos feitas durante a resolução. |
-| System Design | `consultas/system-design.sql` | MySQL — Alura | Tentativas com avaliação final persistida, incluindo classificação, resumo e resultado detalhado em JSON. |
-| Roleplay Entrevista comportamental | `consultas/roleplay-entrevista-comportamental.sql` | PostgreSQL — Gnarus AI | Tentativas `behavioral_interview` com decisão, resumo, pontos fortes, pontos a melhorar, competências, pontuação, recomendação e plano de ação. |
-| Roleplay Entrevista Técnica | `consultas/roleplay-entrevista-tecnica.sql` | PostgreSQL — Gnarus AI | Tentativas `technical_interview` com decisão, resumo, pontos fortes, pontos a melhorar, competências, pontuação, recomendação e plano de ação. |
-| Roleplay Defesa de Case | `consultas/roleplay-defesa-de-case.sql` | PostgreSQL — Gnarus AI | Tentativas `case_interview` com decisão, resultado, competências, melhorias, próxima simulação, recomendação e plano de ação. |
+As consultas do Gnarus AI devem ser executadas integralmente na mesma conexão, incluindo `BEGIN` e `SET LOCAL`. Configure o BI para encerrar ou descartar a conexão, ou aplicar rollback automático ao fim da execução. Se uma consulta não retornar linhas, mantenha o cabeçalho no arquivo e registre qualquer falha separadamente.
 
-Execute as consultas MySQL no banco Alura de cada tenant desejado e identifique o tenant no nome do arquivo: o `user_id` deve ser interpretado nesse contexto. As consultas PostgreSQL filtram o tenant `96785b22-3302-4c34-ae92-b48425346811` e incluem `tenant_id` em cada linha. As consultas excluem registros sem resultado persistido e ordenam os resultados do mais recente para o mais antigo.
+### 3. Gerar a consulta de usuários
 
-Os arquivos de resultados e relatórios são ignorados pelo Git por poderem conter dados de pessoas usuárias. O `.gitignore` não impede o acesso local aos arquivos; mantenha-os em um local com acesso adequado. As consultas foram elaboradas a partir dos mapeamentos e migrações do projeto e não foram executadas em um banco.
-
-As consultas do Gnarus AI devem ser executadas integralmente, na mesma conexão: `BEGIN READ ONLY` e `SET LOCAL` definem o contexto de tenant exigido pelas políticas de acesso. O bloco termina no `SELECT` para que o cliente mostre as linhas. Configure o cliente para encerrar ou descartar a conexão, ou aplicar rollback automático ao fim da execução, evitando deixar a transação aberta.
-
-## Filtro de alunos nos resultados
-
-Os exemplos abaixo usam os nomes dos arquivos atualmente em `resultados/intermediarios/`. Se você usar nomes com data nas próximas extrações, ajuste os caminhos. Execute os comandos no diretório `analise-resultados/`. A consulta SQL gerada é substituída a cada execução; para os resultados filtrados, escolha nomes de saída que ainda não existam.
-
-As consultas de Code Interview e System Design filtram diretamente `User.role = 'STUDENT'` no MySQL. Para Roleplay, execute as três consultas no Gnarus AI e exporte os resultados originais em CSV ou TSV com cabeçalhos. Em seguida, gere uma consulta contendo somente os IDs distintos presentes nesses arquivos:
+No terminal, ainda neste diretório, execute:
 
 ```bash
 python3 scripts/gerar_consulta_usuarios.py \
@@ -50,21 +39,28 @@ python3 scripts/gerar_consulta_usuarios.py \
   resultados/intermediarios/roleplay-defesa-de-case.tsv
 ```
 
-Execute o SQL gerado no banco Alura correspondente ao tenant do Gnarus AI. Exporte o resultado em CSV ou TSV com o cabeçalho `user_id`, por exemplo em `resultados/intermediarios/2026-11-04-usuarios-student-alura.csv`. A consulta procura os IDs em grupos de até 1.000 valores, mas é executada como uma única instrução. Se não houver IDs nos arquivos de entrada, ela não retorna usuários.
+O comando substitui `usuarios-roleplay.sql` pela consulta dos IDs encontrados nos três Roleplays.
 
-Para cada arquivo de Roleplay, execute a partir deste diretório:
+### 4. Consultar os alunos no Alura
 
-```bash
-python3 scripts/filtrar_roleplay.py \
-  resultados/intermediarios/2026-11-04-usuarios-student-alura.csv \
-  resultados/intermediarios/roleplay-entrevista-tecnica.tsv \
-  resultados/finais/2026-11-04-roleplay-entrevista-tecnica-student.tsv
+Abra `resultados/intermediarios/usuarios-roleplay.sql`, copie seu conteúdo e execute no banco **Alura** pelo BI. Copie o resultado, incluindo o cabeçalho `user_id`, e cole em:
+
+```text
+resultados/intermediarios/usuarios-student.tsv
 ```
 
-Repita para os arquivos de entrevista comportamental e defesa de case. Os scripts conferem o tenant das linhas de Roleplay. A geração substitui o SQL de saída; o filtro não sobrescreve arquivos existentes. O filtro compara `user_id` com `User.id` e informa quantas linhas foram mantidas e excluídas. Solicite análises usando os arquivos filtrados em `resultados/finais/`; os originais não estão filtrados por role. Use extrações do mesmo dia: o cruzamento considera a role no momento da consulta ao Alura, que pode diferir da role na data da tentativa. Um ID ausente do resultado da consulta ao Alura é excluído.
+Esse arquivo identifica os usuários com role `STUDENT` no momento da consulta.
 
-Os scripts identificam o separador pela extensão: `.tsv` usa tabulação e `.csv` usa vírgula. É possível combinar arquivos CSV e TSV na mesma execução; escolha a extensão da saída filtrada conforme o formato desejado.
+### 5. Gerar os resultados finais
 
-Os campos selecionados do JSON podem ser nulos se não estiverem presentes no artefato persistido. As consultas não retornam a conversa completa; ela pode ser consultada separadamente pelo identificador da tentativa.
+```bash
+python3 scripts/filtrar_todos_roleplays.py
+```
 
-As consultas de Roleplay codificam os campos de conteúdo em Base64 para permitir a cópia do resultado pelo BI sem tabulações ou quebras de linha dentro das células. O script `filtrar_roleplay.py` decodifica esses campos no arquivo filtrado, preservando o texto original. Os arquivos copiados do BI devem conter o cabeçalho e ser salvos como TSV.
+O comando cruza os três Roleplays com a lista de alunos, decodifica os campos e substitui os três arquivos correspondentes em `resultados/finais/`. Se algum filtro falhar durante a preparação, os resultados anteriores são preservados.
+
+### 6. Solicitar a análise
+
+Os cinco arquivos para análise estão em `resultados/finais/`. Peça ao Codex: **“Execute as instruções de [prompt-gerar-relatorio.md](prompt-gerar-relatorio.md)”**. Informe se alguma consulta falhou ou não retornou dados. O prompt usa o [modelo de relatório](modelo-relatorio.md) e salva um novo arquivo em `relatorios/` com a data de hoje.
+
+As extrações são retratos completos e podem repetir tentativas de dias anteriores. Os resultados e relatórios são ignorados pelo Git.

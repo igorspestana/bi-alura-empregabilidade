@@ -40,7 +40,15 @@ def main():
                     else:
                         decoded[key.removesuffix("_base64")] = value
                 rows.append(decoded)
-        with args.saida.open("x", encoding="utf-8", newline="") as output:
+        try:
+            output = args.saida.open("x", encoding="utf-8", newline="")
+        except FileExistsError:
+            output = args.saida.open("r+", encoding="utf-8", newline="")
+            if output.read(1):
+                output.close()
+                parser.error("o arquivo de saída já contém dados")
+            output.seek(0)
+        with output:
             writer = csv.DictWriter(output, fieldnames=output_fields, delimiter="\t" if args.saida.suffix.lower() == ".tsv" else ",")
             writer.writeheader()
             writer.writerows(rows)
