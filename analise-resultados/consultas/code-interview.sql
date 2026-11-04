@@ -1,4 +1,4 @@
--- MySQL: execute no banco de cada tenant desejado.
+-- MySQL — Alura: execute no banco de cada tenant desejado.
 SELECT
     a.user_id,
     a.id AS attempt_id,
@@ -9,6 +9,7 @@ SELECT
     s.executionEvaluationId,
     s.executionResponse
 FROM UserCodeChallengeAttempt a
+JOIN `User` u ON u.id = a.user_id AND u.role = 'STUDENT'
 JOIN CodeChallengeSubmission s ON s.attempt_id = a.id
 WHERE s.executionResponse IS NOT NULL
 ORDER BY s.submittedAt DESC;
