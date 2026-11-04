@@ -1,0 +1,11 @@
+# Extrações de produção e relatórios derivados, em ambas as rotinas
+/analise-resultados/resultados/**/*
+!/analise-resultados/resultados/**/
+!/analise-resultados/resultados/**/.gitkeep
+/analise-resultados/relatorios/*
+!/analise-resultados/relatorios/.gitkeep
+/analise-uso/resultados/**/*
+!/analise-uso/resultados/**/
+!/analise-uso/resultados/**/.gitkeep
+/analise-uso/relatorios/*
+!/analise-uso/relatorios/.gitkeep
