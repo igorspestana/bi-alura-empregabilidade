@@ -39,7 +39,7 @@ python3 scripts/gerar_consulta_usuarios.py \
   resultados/intermediarios/roleplay-defesa-de-case.tsv
 ```
 
-O comando substitui `usuarios-roleplay.sql` pela consulta dos IDs encontrados nos três Roleplays.
+O comando substitui `usuarios-roleplay.sql` pela consulta dos IDs encontrados nas tentativas dos três Roleplays, inclusive nas tentativas sem avaliação.
 
 ### 4. Consultar os alunos no Alura
 
@@ -61,6 +61,8 @@ O comando cruza os três Roleplays com a lista de alunos, decodifica os campos e
 
 ### 6. Solicitar a análise
 
-Os cinco arquivos para análise estão em `resultados/finais/`. Peça ao Codex: **“Execute as instruções de [prompt-gerar-relatorio.md](prompt-gerar-relatorio.md)”**. Informe se alguma consulta falhou ou não retornou dados. O prompt usa o [modelo de relatório](modelo-relatorio.md) e salva um novo arquivo em `relatorios/` com a data de hoje.
+Os cinco arquivos estão em `resultados/finais/`. Cada consulta reúne tentativas criadas e resultados disponíveis, identificados pela coluna `resultado_disponivel`. Execute novamente as cinco consultas atualizadas: exportações antigas não incluem todas as tentativas e não servem para contar o total criado.
+
+Peça ao Codex: **“Execute as instruções de [prompt-gerar-relatorio.md](prompt-gerar-relatorio.md)”**. Informe se alguma consulta falhou ou não retornou dados. O prompt usa o [modelo de relatório](modelo-relatorio.md) e salva um novo arquivo em `relatorios/` com a data de hoje e um contador diário, como `AAAA-MM-DD-01.md` e `AAAA-MM-DD-02.md`, sem sobrescrever arquivos existentes.
 
 As extrações são retratos completos e podem repetir tentativas de dias anteriores. Os resultados e relatórios são ignorados pelo Git.

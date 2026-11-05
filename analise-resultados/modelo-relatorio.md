@@ -1,16 +1,16 @@
 # Relatório de resultados - Empregabilidade
 
-- **Data da extração:** [data atual no fuso America/Sao_Paulo]
+- **Data da extração:** [data atual no fuso America/Sao_Paulo no formato DD/MM/AA]
 
 ## 1. Visão geral dos resultados
 
-| Atividade | Período analisado | Resultados analisados | Resultado | Destaque |
-| --- | --- | ---: | --- | --- |
-| Code Interview | [período ou -] | [número ou -] | [testes aprovados e totais, quando disponíveis] | [evidência] |
-| System Design | [período ou -] | [número ou -] | [distribuição das classificações, quando disponível] | [evidência] |
-| Entrevista comportamental | [período ou -] | [número ou -] | [decisões e proporções] | [evidência] |
-| Entrevista técnica | [período ou -] | [número ou -] | [decisões e proporções] | [evidência] |
-| Defesa de Case | [período ou -] | [número ou -] | [decisões e proporções] | [evidência] |
+| Atividade | Período dos resultados | Tentativas criadas | Resultados analisados | Resultado | Destaque |
+| --- | --- | ---: | ---: | --- | --- |
+| Code Interview | [período ou -] | [número ou não disponível] | [submissões analisadas ou não disponível] | [testes aprovados e totais, quando disponíveis] | [evidência] |
+| System Design | [período ou -] | [número ou não disponível] | [avaliações analisadas ou não disponível] | [distribuição das classificações, quando disponível] | [evidência] |
+| Entrevista comportamental | [período ou -] | [número ou não disponível] | [avaliações analisadas ou não disponível] | [decisões e proporções] | [evidência] |
+| Entrevista técnica | [período ou -] | [número ou não disponível] | [avaliações analisadas ou não disponível] | [decisões e proporções] | [evidência] |
+| Defesa de Case | [período ou -] | [número ou não disponível] | [avaliações analisadas ou não disponível] | [decisões e proporções] | [evidência] |
 
 ## 2. Resultados por atividade
 

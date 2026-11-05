@@ -1,7 +1,6 @@
 # Relatório de uso das features - Empregabilidade
 
-- **Data do relatório:** [data atual no fuso America/Sao_Paulo]
-- **Período dos dados:** [período comprovado ou não disponível]
+- **Data da extração:** [data atual no fuso America/Sao_Paulo no formato DD/MM/AA]
 
 ## 1. Visão geral do uso
 
@@ -13,44 +12,39 @@
 | Entrevista técnica | [quantidade] | [quantidade] | [escopo ou limitações] |
 | Defesa de Case | [quantidade] | [quantidade] | [escopo ou limitações] |
 
-## 2. Uso por aluno e feature
+## 2. Uso por produto e feature
 
 ### Code Interview
 
-| ID do aluno | Produtos válidos na consulta | Tentativas criadas | Testes | Submissões |
-| --- | --- | ---: | ---: | ---: |
-| [user_id] | [produtos ou situação da informação] | [quantidade] | [quantidade] | [quantidade] |
+| Produto válido na consulta | Alunos únicos | Tentativas criadas | Testes | Submissões |
+| --- | ---: | ---: | ---: | ---: |
+| [produto ou situação da informação] | [quantidade] | [quantidade] | [quantidade] | [quantidade] |
 
-**Observações:** [escopo, origem dos produtos e limitações]
 
 ### System Design
 
-| ID do aluno | Produtos válidos na consulta | Tentativas criadas |
-| --- | --- | ---: |
-| [user_id] | [produtos ou situação da informação] | [quantidade] |
+| Produto válido na consulta | Alunos únicos | Tentativas criadas |
+| --- | ---: | ---: |
+| [produto ou situação da informação] | [quantidade] | [quantidade] |
 
-**Observações:** [escopo, origem dos produtos e limitações]
 
 ### Entrevista comportamental
 
-| ID do aluno | Produtos válidos na consulta | Tentativas criadas | Turnos | Finalizações solicitadas | Transcrições |
-| --- | --- | ---: | ---: | ---: | ---: |
-| [user_id] | [produtos e origem ou não disponível] | [quantidade] | [quantidade] | [quantidade] | [quantidade] |
+| Produto válido na consulta | Alunos únicos | Tentativas criadas | Turnos | Finalizações solicitadas | Transcrições |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| [produto ou situação da informação] | [quantidade] | [quantidade] | [quantidade] | [quantidade] | [quantidade] | [quantidade] |
 
-**Observações:** [escopo, origem dos produtos e limitações]
 
 ### Entrevista técnica
 
-| ID do aluno | Produtos válidos na consulta | Tentativas criadas | Turnos | Finalizações solicitadas | Transcrições |
-| --- | --- | ---: | ---: | ---: | ---: |
-| [user_id] | [produtos e origem ou não disponível] | [quantidade] | [quantidade] | [quantidade] | [quantidade] |
+| Produto válido na consulta | Alunos únicos | Tentativas criadas | Turnos | Finalizações solicitadas | Transcrições |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| [produto ou situação da informação] | [quantidade] | [quantidade] | [quantidade] | [quantidade] | [quantidade] | [quantidade] |
 
-**Observações:** [escopo, origem dos produtos e limitações]
 
 ### Defesa de Case
 
-| ID do aluno | Produtos válidos na consulta | Tentativas criadas | Turnos | Finalizações solicitadas | Transcrições |
-| --- | --- | ---: | ---: | ---: | ---: |
-| [user_id] | [produtos e origem ou não disponível] | [quantidade] | [quantidade] | [quantidade] | [quantidade] |
+| Produto válido na consulta | Alunos únicos | Tentativas criadas | Turnos | Finalizações solicitadas | Transcrições |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| [produto ou situação da informação] | [quantidade] | [quantidade] | [quantidade] | [quantidade] | [quantidade] | [quantidade] |
 
-**Observações:** [escopo, origem dos produtos e limitações]

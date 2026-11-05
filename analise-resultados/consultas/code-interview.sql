@@ -2,6 +2,7 @@
 SELECT
     a.user_id,
     a.id AS attempt_id,
+    (s.id IS NOT NULL) AS resultado_disponivel,
     s.id AS submission_id,
     s.status,
     s.submittedAt,
@@ -10,6 +11,6 @@ SELECT
     s.executionResponse
 FROM UserCodeChallengeAttempt a
 JOIN `User` u ON u.id = a.user_id AND u.role = 'STUDENT'
-JOIN CodeChallengeSubmission s ON s.attempt_id = a.id
-WHERE s.executionResponse IS NOT NULL
+LEFT JOIN CodeChallengeSubmission s
+    ON s.attempt_id = a.id AND s.executionResponse IS NOT NULL
 ORDER BY s.submittedAt DESC;

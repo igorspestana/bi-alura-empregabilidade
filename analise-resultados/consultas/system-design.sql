@@ -2,6 +2,7 @@
 SELECT
     a.user_id,
     a.id AS attempt_id,
+    (s.result IS NOT NULL) AS resultado_disponivel,
     a.status AS attempt_status,
     a.overallClassification,
     a.evaluationSummary,
@@ -11,8 +12,8 @@ SELECT
     s.result AS detailed_result
 FROM SystemDesignAttempt a
 JOIN `User` u ON u.id = a.user_id AND u.role = 'STUDENT'
-JOIN SystemDesignInterviewStep s
+LEFT JOIN SystemDesignInterviewStep s
     ON s.attempt_id = a.id
    AND s.type = 'FINAL_EVALUATION'
-WHERE s.result IS NOT NULL
+   AND s.result IS NOT NULL
 ORDER BY a.submittedAt DESC;

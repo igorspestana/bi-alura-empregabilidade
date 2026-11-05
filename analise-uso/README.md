@@ -63,4 +63,4 @@ O comando cruza as três extrações intermediárias com a lista de alunos, deco
 
 Os cinco arquivos para análise estão em `resultados/finais/`: Code Interview, System Design e os três Roleplays filtrados para alunos. Peça ao Codex: **“Execute as instruções de [prompt-gerar-relatorio.md](prompt-gerar-relatorio.md)”**. Informe se alguma consulta falhou ou não retornou dados.
 
-O relatório será salvo em `relatorios/` com a data de hoje. As extrações e os relatórios são ignorados pelo Git.
+O relatório será salvo em `relatorios/` com a data de hoje e um contador diário, como `AAAA-MM-DD-01.md` e `AAAA-MM-DD-02.md`, sem sobrescrever arquivos existentes. Ele apresentará alunos e eventos agregados por produto válido no momento da consulta. Um aluno com mais de um produto aparece em cada grupo, por isso as linhas não devem ser somadas para obter o total da feature. As extrações e os relatórios são ignorados pelo Git.

@@ -7,6 +7,7 @@ SELECT
     tenant_id,
     user_id,
     id AS attempt_id,
+    (artifact IS NOT NULL) AS resultado_disponivel,
     status,
     started_at,
     completed_at,
@@ -20,5 +21,4 @@ SELECT
 FROM gnarus_ai.roleplay_attempts AS attempt
 WHERE attempt.tenant_id = '96785b22-3302-4c34-ae92-b48425346811'::uuid
   AND roleplay_type = 'case_interview'
-  AND artifact IS NOT NULL
 ORDER BY started_at DESC;
