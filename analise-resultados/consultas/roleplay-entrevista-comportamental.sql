@@ -4,7 +4,6 @@ BEGIN READ ONLY;
 SET LOCAL app.current_tenant_id = '96785b22-3302-4c34-ae92-b48425346811';
 
 SELECT
-    tenant_id,
     user_id,
     id AS attempt_id,
     (artifact IS NOT NULL) AS resultado_disponivel,

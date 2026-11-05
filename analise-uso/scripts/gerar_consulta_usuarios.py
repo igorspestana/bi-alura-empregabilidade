@@ -19,10 +19,10 @@ def main():
     for path in args.arquivos:
         with path.open(encoding="utf-8-sig", newline="") as source:
             reader = csv.DictReader(source, delimiter="\t" if path.suffix.lower() == ".tsv" else ",")
-            if not reader.fieldnames or not {"tenant_id", "user_id"}.issubset(reader.fieldnames):
-                parser.error(f"{path}: são necessárias as colunas tenant_id e user_id")
+            if not reader.fieldnames or "user_id" not in reader.fieldnames:
+                parser.error(f"{path}: é necessária a coluna user_id")
             for row in reader:
-                if (row.get("tenant_id") or "").strip().lower() != TENANT:
+                if "tenant_id" in reader.fieldnames and (row.get("tenant_id") or "").strip().lower() != TENANT:
                     parser.error(f"{path}: tenant diferente do configurado")
                 value = (row.get("user_id") or "").strip()
                 if not value.isascii() or not value.isdecimal() or int(value) <= 0:

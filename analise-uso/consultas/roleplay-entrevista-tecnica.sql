@@ -35,7 +35,6 @@ eventos AS MATERIALIZED (
       AND o.operation_type IN ('turn', 'finish', 'audio_transcription')
 )
 SELECT
-    tenant_id,
     user_id,
     COUNT(*) OVER (PARTITION BY tenant_id) AS alunos_unicos_na_feature,
     COUNT(DISTINCT tentativa_id) AS tentativas_com_atividade,

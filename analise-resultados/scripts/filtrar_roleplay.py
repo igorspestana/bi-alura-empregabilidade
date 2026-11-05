@@ -23,18 +23,20 @@ def main():
         students = {row["user_id"].strip() for row in reader if row["user_id"] and row["user_id"].strip()}
     with args.roleplay.open(encoding="utf-8-sig", newline="") as source:
         reader = csv.DictReader(source, delimiter="\t" if args.roleplay.suffix.lower() == ".tsv" else ",")
-        if not reader.fieldnames or not {"user_id", "tenant_id"}.issubset(reader.fieldnames):
-            parser.error("o CSV de roleplay precisa das colunas user_id e tenant_id")
-        output_fields = [name.removesuffix("_base64") for name in reader.fieldnames]
+        if not reader.fieldnames or "user_id" not in reader.fieldnames:
+            parser.error("o CSV de roleplay precisa da coluna user_id")
+        output_fields = [name.removesuffix("_base64") for name in reader.fieldnames if name != "tenant_id"]
         rows = []
         total = 0
         for row in reader:
             total += 1
-            if (row.get("tenant_id") or "").strip().lower() != TENANT:
+            if "tenant_id" in reader.fieldnames and (row.get("tenant_id") or "").strip().lower() != TENANT:
                 parser.error("o CSV de roleplay contém tenant diferente do configurado")
             if (row.get("user_id") or "").strip() in students:
                 decoded = {}
                 for key, value in row.items():
+                    if key == "tenant_id":
+                        continue
                     if key.endswith("_base64") and value:
                         decoded[key.removesuffix("_base64")] = base64.b64decode(value, validate=True).decode("utf-8")
                     else:
