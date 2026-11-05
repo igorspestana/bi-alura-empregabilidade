@@ -1,35 +1,30 @@
 # Prompt: gerar relatório de uso
 
-Analise os arquivos em `resultados/finais/` e crie um novo relatório em `relatorios/`, preenchendo `modelo-relatorio.md`.
+Analise os arquivos em `resultados/finais/` e crie um relatório em `relatorios/` usando `modelo-relatorio.md`. O objetivo é apresentar, para cada feature, a quantidade de alunos únicos, os produtos disponíveis para esses alunos e o uso de cada aluno.
 
-## Regra obrigatória de estrutura
+## Estrutura e preservação
 
-- Use o modelo como estrutura literal e obrigatória: preserve o título, todos os títulos e subtítulos, a ordem das seções, os nomes dos campos e as colunas e linhas da tabela de visão geral.
-- Substitua os textos entre colchetes por conteúdo. Não mantenha instruções de preenchimento como se fossem resultados.
-- Não crie preâmbulo, seção, título, subtítulo, tabela ou campo fora do modelo; não renomeie, remova, reordene ou acrescente elementos estruturais. Coloque a data de referência e eventuais limitações nos campos existentes mais pertinentes, sem adicionar linhas de metadados. Não inclua nomes ou caminhos de arquivos, nem indicações de fonte no relatório.
-- Preencha `Data da extração` com a data atual no fuso `America/Sao_Paulo`.
-- Preencha todas as seções do modelo. Se uma métrica ou conclusão não estiver disponível, escreva `não disponível` e explique brevemente o motivo no campo correspondente. Não deixe placeholders vazios.
-
-## Nome e preservação de relatórios
-
-- Use a data de hoje no fuso `America/Sao_Paulo` no nome `AAAA-MM-DD.md`.
-- Se o nome já existir, crie outro com o próximo sufixo sequencial disponível, como `AAAA-MM-DD-02.md`. Nunca sobrescreva um relatório anterior.
+- Preserve o título, as seções, os subtítulos e as colunas das tabelas do modelo. Substitua os textos entre colchetes e acrescente às tabelas todas as linhas necessárias para os resultados; não limite a relação de alunos a uma amostra ou ranking.
+- Preencha `Data do relatório` com a data atual no fuso `America/Sao_Paulo`. Essa data não comprova a data em que os dados foram extraídos.
+- Salve em `relatorios/AAAA-MM-DD.md`, usando a data atual nesse fuso. Se o arquivo existir, use o próximo sufixo disponível, como `AAAA-MM-DD-02.md`; não sobrescreva relatórios.
+- Use linguagem direta e informe as limitações na seção correspondente. Não invente valores. Quando uma informação estiver indisponível, escreva `não disponível` e explique o motivo.
 
 ## Verificação das fontes
 
-- Antes de analisar, confira os cinco arquivos esperados: `resultados/finais/code-interview.tsv`, `resultados/finais/system-design.tsv` e `resultados/finais/roleplay-entrevista-comportamental-student.tsv`, `resultados/finais/roleplay-entrevista-tecnica-student.tsv` e `resultados/finais/roleplay-defesa-de-case-student.tsv`. Para cada arquivo, verifique se existe, pode ser lido e interpretado, contém cabeçalho e registros, e se os campos necessários para as métricas informadas estão preenchidos e válidos.
-- Um arquivo somente com cabeçalho significa que a consulta foi executada e retornou zero linhas no período e no escopo consultados. Registre que não houve linhas retornadas nesse recorte. Isso não permite concluir que houve zero uso fora do escopo consultado, nem que não existam registros em outros períodos. Não confunda isso com arquivo ausente, vazio, ilegível ou consulta com falha.
-- Se a fonte estiver ausente, ilegível ou incompleta a ponto de impedir uma conclusão, marque o resultado como indisponível, diga qual informação falta no relatório e peça essa informação na resposta final. Continue preenchendo o relatório com os dados válidos restantes.
+- Confira `resultados/finais/code-interview.tsv`, `system-design.tsv`, `roleplay-entrevista-comportamental-student.tsv`, `roleplay-entrevista-tecnica-student.tsv` e `roleplay-defesa-de-case-student.tsv` no mesmo diretório. Verifique leitura, cabeçalho, separação das colunas, identificadores e contagens numéricas. Identifique IDs duplicados, campos obrigatórios ausentes ou inválidos e possíveis inconsistências antes de calcular métricas; não some linhas duplicadas sem entender sua origem. Registre a limitação e peça os dados corrigidos quando necessário.
+- Arquivo somente com cabeçalho representa zero linhas retornadas no escopo consultado, desde que a execução tenha sido confirmada. Diferencie isso de arquivo ausente, vazio, ilegível ou consulta com falha. Se a fonte estiver incompleta, apresente os dados válidos que puder sustentar e marque as conclusões afetadas como indisponíveis.
+- As consultas não fornecem datas dos eventos nem um período explícito nas exportações. Não trate a data do relatório como período de uso, não infira evolução temporal e indique o período como não disponível quando não houver evidência.
 
-## Análise e evidências
+## Regras de análise
 
-- Escreva para pessoas de produto: use frases curtas, linguagem direta e nomes compreensíveis. Explique o significado de cada métrica e deixe clara sua unidade, como usuários distintos, sessões, tentativas ou eventos, conforme os dados permitirem.
-- Use exclusivamente os dados dos arquivos. Não invente nem infira resultados que as fontes não sustentem. Não presuma que linhas de arquivos diferentes possam ser somadas ou comparadas diretamente; verifique períodos, escopos, unidades e possíveis sobreposições.
-- Na tabela de visão geral, indique para cada feature o período efetivamente coberto pelos registros válidos, usando as datas da própria fonte. Se não houver registros ou datas válidas, use `—` e explique a limitação no resultado da feature.
-- Diferencie contagens de pessoas distintas de contagens de uso, e informe denominadores ao apresentar proporções. Não chame eventos ou tentativas de usuários. Evite identificar pessoas ou reproduzir dados pessoais.
-- Considere as limitações de escopo e de definição das consultas. O conteúdo das consultas define quais eventos e usuários foram incluídos; não generalize para todo o uso da feature sem evidência.
+- Para cada feature, conte `user_id` distintos no respectivo arquivo final. Os Roleplays já foram filtrados pela role `STUDENT` no momento da consulta ao Alura. Não use `alunos_unicos_na_feature` dos Roleplays como total de alunos: ela foi calculada antes desse filtro. Os totais por feature não podem ser somados para obter pessoas distintas no conjunto, pois um aluno pode usar mais de uma feature.
+- Liste cada aluno por `user_id` nas tabelas de detalhe e apresente suas `tentativas_criadas` como tentativas iniciadas, distinguindo-as dos demais eventos. Apresente também as contagens de eventos disponíveis para a feature; não some tentativas, testes, submissões, turnos, finalizações e transcrições como se fossem a mesma unidade ou sessões. Preserve os zeros observados. Se houver divergência entre `tentativas_com_atividade` e `tentativas_criadas`, informe-a nas observações em vez de presumir equivalência.
+- Em Code Interview, mostre tentativas, testes e submissões. Em System Design, mostre tentativas: a consulta atual não extrai testes nem submissões, e os zeros dessas colunas não comprovam ausência desses eventos. Nos Roleplays, mostre tentativas, turnos, finalizações solicitadas e transcrições; finalização solicitada não significa necessariamente conclusão.
+- Em Code Interview e System Design, use `produtos_validos_no_momento_da_consulta` para os produtos associados ao aluno no momento da consulta, não necessariamente no momento do uso. Preserve códigos e nomes disponíveis, sem deduzir plano, tipo de assinatura ou produto ausente. Se o campo estiver vazio, informe que nenhum produto válido foi identificado pela consulta, sem concluir que o aluno não tem plano.
+- Nos arquivos finais de Roleplay, leia `produtos_validos_no_momento_da_consulta` como uma lista JSON de produtos obtidos na consulta de usuários no Alura. Uma lista vazia significa que nenhum produto válido foi identificado por essa consulta; não conclua que o aluno não tem plano. Se a coluna estiver ausente ou a lista for inválida, informe `não disponível` e solicite a geração atualizada. Relações de produtos podem estar incompletas se houver indícios de truncamento ou separação ambígua nas demais fontes.
+- Explique o escopo das consultas: os arquivos podem conter histórico acumulado; role e produtos refletem o momento de suas respectivas consultas. As contagens não identificam uso diário e não permitem deduzir outros tipos de atividade não extraídos.
 
 ## Entrega
 
-- Salve o relatório no caminho definido acima, usando todas e somente as seções do modelo.
-- Na resposta final, informe o caminho do arquivo criado e as principais limitações encontradas; peça os dados faltantes necessários quando aplicável.
+- Inclua as tabelas completas por aluno no relatório, usando apenas o identificador `user_id` e os dados solicitados; não acrescente nomes, e-mails ou outros dados pessoais.
+- Na resposta final, informe o caminho do relatório e as limitações relevantes. Peça os dados faltantes necessários quando aplicável.

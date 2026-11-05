@@ -1,45 +1,56 @@
 # Relatório de uso das features - Empregabilidade
 
-- **Data da extração:** [data atual no fuso America/Sao_Paulo]
+- **Data do relatório:** [data atual no fuso America/Sao_Paulo]
+- **Período dos dados:** [período comprovado ou não disponível]
 
 ## 1. Visão geral do uso
 
-| Feature | Período analisado | Métrica de uso | Resultado | Destaque |
-| --- | --- | --- | --- | --- |
-| Code Interview | [período ou —] | [métrica e unidade] | [resultado] | [evidência] |
-| System Design | [período ou —] | [métrica e unidade] | [resultado] | [evidência] |
-| Entrevista comportamental | [período ou —] | [métrica e unidade] | [resultado] | [evidência] |
-| Entrevista técnica | [período ou —] | [métrica e unidade] | [resultado] | [evidência] |
-| Defesa de Case | [período ou —] | [métrica e unidade] | [resultado] | [evidência] |
+| Feature | Alunos únicos | Tentativas criadas | Observações |
+| --- | ---: | ---: | --- |
+| Code Interview | [quantidade] | [quantidade] | [escopo ou limitações] |
+| System Design | [quantidade] | [quantidade] | [escopo ou limitações] |
+| Entrevista comportamental | [quantidade] | [quantidade] | [escopo ou limitações] |
+| Entrevista técnica | [quantidade] | [quantidade] | [escopo ou limitações] |
+| Defesa de Case | [quantidade] | [quantidade] | [escopo ou limitações] |
 
-## 2. Uso por feature
+## 2. Uso por aluno e feature
 
 ### Code Interview
 
-- **Uso observado:** [métricas disponíveis e suas unidades]
-- **Evolução ou distribuição:** [evidência temporal ou por categoria, quando disponível]
-- **Observações:** [limitações ou “dados insuficientes”]
+| ID do aluno | Produtos válidos na consulta | Tentativas criadas | Testes | Submissões |
+| --- | --- | ---: | ---: | ---: |
+| [user_id] | [produtos ou situação da informação] | [quantidade] | [quantidade] | [quantidade] |
+
+**Observações:** [escopo, origem dos produtos e limitações]
 
 ### System Design
 
-- **Uso observado:** [métricas disponíveis e suas unidades]
-- **Evolução ou distribuição:** [evidência temporal ou por categoria, quando disponível]
-- **Observações:** [limitações ou “dados insuficientes”]
+| ID do aluno | Produtos válidos na consulta | Tentativas criadas |
+| --- | --- | ---: |
+| [user_id] | [produtos ou situação da informação] | [quantidade] |
+
+**Observações:** [escopo, origem dos produtos e limitações]
 
 ### Entrevista comportamental
 
-- **Uso observado:** [métricas disponíveis e suas unidades]
-- **Evolução ou distribuição:** [evidência temporal ou por categoria, quando disponível]
-- **Observações:** [limitações ou “dados insuficientes”]
+| ID do aluno | Produtos válidos na consulta | Tentativas criadas | Turnos | Finalizações solicitadas | Transcrições |
+| --- | --- | ---: | ---: | ---: | ---: |
+| [user_id] | [produtos e origem ou não disponível] | [quantidade] | [quantidade] | [quantidade] | [quantidade] |
+
+**Observações:** [escopo, origem dos produtos e limitações]
 
 ### Entrevista técnica
 
-- **Uso observado:** [métricas disponíveis e suas unidades]
-- **Evolução ou distribuição:** [evidência temporal ou por categoria, quando disponível]
-- **Observações:** [limitações ou “dados insuficientes”]
+| ID do aluno | Produtos válidos na consulta | Tentativas criadas | Turnos | Finalizações solicitadas | Transcrições |
+| --- | --- | ---: | ---: | ---: | ---: |
+| [user_id] | [produtos e origem ou não disponível] | [quantidade] | [quantidade] | [quantidade] | [quantidade] |
+
+**Observações:** [escopo, origem dos produtos e limitações]
 
 ### Defesa de Case
 
-- **Uso observado:** [métricas disponíveis e suas unidades]
-- **Evolução ou distribuição:** [evidência temporal ou por categoria, quando disponível]
-- **Observações:** [limitações ou “dados insuficientes”]
+| ID do aluno | Produtos válidos na consulta | Tentativas criadas | Turnos | Finalizações solicitadas | Transcrições |
+| --- | --- | ---: | ---: | ---: | ---: |
+| [user_id] | [produtos e origem ou não disponível] | [quantidade] | [quantidade] | [quantidade] | [quantidade] |
+
+**Observações:** [escopo, origem dos produtos e limitações]

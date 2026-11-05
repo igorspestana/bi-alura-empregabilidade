@@ -3,6 +3,8 @@
 import argparse
 import base64
 import csv
+import json
+import binascii
 from pathlib import Path
 
 TENANT = "96785b22-3302-4c34-ae92-b48425346811"
@@ -18,14 +20,31 @@ def main():
         parser.error("a saída deve ser diferente dos arquivos de entrada")
     with args.usuarios.open(encoding="utf-8-sig", newline="") as source:
         reader = csv.DictReader(source, delimiter="\t" if args.usuarios.suffix.lower() == ".tsv" else ",")
-        if not reader.fieldnames or "user_id" not in reader.fieldnames:
-            parser.error("o CSV de usuários precisa da coluna user_id")
-        students = {row["user_id"].strip() for row in reader if row["user_id"] and row["user_id"].strip()}
+        if not reader.fieldnames or not {"user_id", "produto_base64"}.issubset(reader.fieldnames):
+            parser.error("a exportação de usuários precisa das colunas user_id e produto_base64; execute novamente a consulta de usuários atualizada")
+        students = {}
+        for line, row in enumerate(reader, 2):
+            if None in row or any(value is None for value in row.values()):
+                parser.error(f"linha {line}: número de colunas inválido na exportação de usuários")
+            user_id = row["user_id"].strip()
+            if not user_id.isascii() or not user_id.isdecimal() or int(user_id) <= 0:
+                parser.error(f"linha {line}: user_id inválido")
+            products = students.setdefault(user_id, set())
+            encoded = row["produto_base64"].strip()
+            if encoded:
+                try:
+                    products.add(base64.b64decode(encoded, validate=True).decode("utf-8"))
+                except (binascii.Error, UnicodeDecodeError):
+                    parser.error(f"linha {line}: produto_base64 inválido")
     with args.roleplay.open(encoding="utf-8-sig", newline="") as source:
         reader = csv.DictReader(source, delimiter="\t" if args.roleplay.suffix.lower() == ".tsv" else ",")
         if not reader.fieldnames or not {"user_id", "tenant_id"}.issubset(reader.fieldnames):
             parser.error("o CSV de roleplay precisa das colunas user_id e tenant_id")
         output_fields = [name.removesuffix("_base64") for name in reader.fieldnames]
+        product_field = "produtos_validos_no_momento_da_consulta"
+        if product_field in output_fields:
+            parser.error("a exportação de roleplay já contém a coluna de produtos")
+        output_fields.append(product_field)
         rows = []
         total = 0
         for row in reader:
@@ -39,6 +58,7 @@ def main():
                         decoded[key.removesuffix("_base64")] = base64.b64decode(value, validate=True).decode("utf-8")
                     else:
                         decoded[key.removesuffix("_base64")] = value
+                decoded[product_field] = json.dumps(sorted(students[row["user_id"].strip()]), ensure_ascii=False)
                 rows.append(decoded)
         try:
             output = args.saida.open("x", encoding="utf-8", newline="")

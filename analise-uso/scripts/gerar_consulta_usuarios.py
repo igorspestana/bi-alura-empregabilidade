@@ -30,9 +30,25 @@ def main():
                 ids.add(int(value))
     ordered = sorted(ids)
     chunks = [ordered[i:i + BATCH_SIZE] for i in range(0, len(ordered), BATCH_SIZE)]
-    clauses = ["id IN (" + ", ".join(map(str, chunk)) + ")" for chunk in chunks]
+    clauses = ["u.id IN (" + ", ".join(map(str, chunk)) + ")" for chunk in chunks]
     condition = "\n    OR ".join(clauses) if clauses else "1 = 0"
-    query = "-- MySQL — Alura; IDs obtidos das extrações de uso de Roleplay.\nSELECT id AS user_id\nFROM `User`\nWHERE role = 'STUDENT'\n  AND (" + condition + ");\n"
+    query = """-- MySQL — Alura; uma linha por aluno e produto válido na consulta.
+SELECT DISTINCT u.id AS user_id,
+    COALESCE(REPLACE(REPLACE(TO_BASE64(CONVERT(CONCAT(p.code, ' — ', p.name) USING utf8mb4)), CHAR(10), ''), CHAR(13), ''), '') AS produto_base64
+FROM `User` u
+LEFT JOIN (
+    SELECT a.user_id, produto.code, produto.name
+    FROM Acquirement a
+    JOIN Product produto ON produto.id = a.product_id
+    LEFT JOIN BMPayment pagamento ON pagamento.id = a.payment_id
+    WHERE a.status IN ('FREE', 'PAID')
+      AND produto.status = 'ENABLED'
+      AND a.startsAt <= NOW()
+      AND a.expirationDate >= CURRENT_DATE()
+      AND (pagamento.id IS NULL OR pagamento.status <> 'REIMBURSED')
+) p ON p.user_id = u.id
+WHERE u.role = 'STUDENT'
+  AND (""" + condition + ")\nORDER BY u.id;\n"
     with args.saida.open("w", encoding="utf-8") as output:
         output.write(query)
     print(f"IDs distintos: {len(ids)}; grupos de até {BATCH_SIZE}: {len(chunks)}")

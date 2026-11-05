@@ -39,17 +39,17 @@ python3 scripts/gerar_consulta_usuarios.py \
   resultados/intermediarios/roleplay-defesa-de-case.tsv
 ```
 
-O comando substitui `usuarios-roleplay.sql` pela consulta dos IDs encontrados nas extrações.
+O comando substitui `usuarios-roleplay.sql` pela consulta dos IDs encontrados nas extrações. A consulta retorna uma linha por aluno e produto válido; alunos sem produto válido também são retornados. O produto é codificado em Base64 para preservar a separação das colunas na cópia do BI.
 
 ### 4. Consultar os alunos no Alura
 
-Abra `resultados/intermediarios/usuarios-roleplay.sql`, copie seu conteúdo e execute no banco **Alura** pelo BI. Copie o resultado, incluindo o cabeçalho `user_id`, e cole em:
+Abra `resultados/intermediarios/usuarios-roleplay.sql`, copie seu conteúdo e execute no banco **Alura** pelo BI. Copie o resultado, incluindo os cabeçalhos `user_id` e `produto_base64`, e cole em:
 
 ```text
 resultados/intermediarios/usuarios-student.tsv
 ```
 
-Esse arquivo identifica quais usuários das extrações têm role `STUDENT` no momento da consulta.
+Esse arquivo identifica os usuários com role `STUDENT` e seus produtos válidos no momento da consulta. Se você já tiver uma exportação anterior contendo apenas `user_id`, execute a consulta atualizada e substitua o arquivo.
 
 ### 5. Gerar os resultados finais de Roleplay
 
@@ -57,7 +57,7 @@ Esse arquivo identifica quais usuários das extrações têm role `STUDENT` no m
 python3 scripts/filtrar_todos_roleplays.py
 ```
 
-O comando cruza as três extrações intermediárias com a lista de alunos e grava os resultados em `resultados/finais/` com o sufixo `-student`. Se algum filtro falhar, os resultados finais anteriores são preservados.
+O comando cruza as três extrações intermediárias com a lista de alunos, decodifica e agrupa os produtos de cada usuário em uma lista JSON e grava os resultados em `resultados/finais/` com o sufixo `-student`. Uma lista vazia significa que a consulta não encontrou produto válido para aquele aluno. Se algum filtro falhar durante a preparação, os resultados finais anteriores são preservados.
 
 ### 6. Solicitar a análise
 
