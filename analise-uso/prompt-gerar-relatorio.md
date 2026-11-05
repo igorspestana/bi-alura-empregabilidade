@@ -17,7 +17,7 @@ Analise os arquivos em `resultados/finais/` e crie um novo relatório em `relato
 
 ## Verificação das fontes
 
-- Antes de analisar, confira os cinco arquivos esperados: Code Interview, System Design e as três features de Roleplay. Para cada arquivo, verifique se existe, pode ser lido e interpretado, contém cabeçalho e registros, e se os campos necessários para as métricas informadas estão preenchidos e válidos.
+- Antes de analisar, confira os cinco arquivos esperados: `resultados/finais/code-interview.tsv`, `resultados/finais/system-design.tsv` e `resultados/finais/roleplay-entrevista-comportamental-student.tsv`, `resultados/finais/roleplay-entrevista-tecnica-student.tsv` e `resultados/finais/roleplay-defesa-de-case-student.tsv`. Para cada arquivo, verifique se existe, pode ser lido e interpretado, contém cabeçalho e registros, e se os campos necessários para as métricas informadas estão preenchidos e válidos.
 - Um arquivo somente com cabeçalho significa que a consulta foi executada e retornou zero linhas no período e no escopo consultados. Registre que não houve linhas retornadas nesse recorte. Isso não permite concluir que houve zero uso fora do escopo consultado, nem que não existam registros em outros períodos. Não confunda isso com arquivo ausente, vazio, ilegível ou consulta com falha.
 - Se a fonte estiver ausente, ilegível ou incompleta a ponto de impedir uma conclusão, marque o resultado como indisponível, diga qual informação falta no relatório e peça essa informação na resposta final. Continue preenchendo o relatório com os dados válidos restantes.
 
